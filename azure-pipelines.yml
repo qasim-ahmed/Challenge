@@ -1,0 +1,64 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+
+variables:
+  subscription: de255c89-79d1-4652-9b7c-81d828c5beaa
+  resourceGroup: defaultresourcegroup
+  storageAccount: defaulstorage
+  container: defaulcontainer
+  tfstateFile: terraform.tfstate
+
+stages:
+  - stage: Install
+    jobs:
+      - job: Installation
+        continueOnError: false
+        steps:
+          - task: TerraformInstaller@0
+            inputs:
+              terraformVersion: '3.6.0'
+          - task: TerraformTaskV3@3
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Azure subscription 1(1)(de255c89-79d1-4652-9b7c-81d828c5beaa)'
+              backendAzureRmResourceGroupName: 'defaultresourcegroup'
+              backendAzureRmStorageAccountName: 'defaulstorage'
+              backendAzureRmContainerName: 'defaulcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
+          
+  - stage: Plan
+    jobs:
+      - job: Plan
+        continueOnError: false 
+        steps:
+          - task: TerraformTaskV3@3
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              commandOptions: '-out=tfplan'
+              environmentServiceNameAzureRM: 'Azure subscription 1(1)(de255c89-79d1-4652-9b7c-81d828c5beaa)'
+          
+  - stage: Apply
+    jobs:
+      - job: Apply
+        continueOnError: false 
+        steps:
+          - task: TerraformTaskV3@3
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              workingDirectory: '$(System.DefaultWorkingDirectory)'
+              commandOptions: 'tfplan'
+              environmentServiceNameAzureRM: 'Azure subscription 1(1)(de255c89-79d1-4652-9b7c-81d828c5beaa)'
+  
