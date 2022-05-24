@@ -11,6 +11,7 @@ pool:
 
 
 variables:
+  group: group1
   subscription: Azure subscription 1(1)(de255c89-79d1-4652-9b7c-81d828c5beaa)
   resourceGroup: defaultresourcegroup
   storageAccount: defaulstorage
