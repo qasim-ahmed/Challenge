@@ -51,7 +51,7 @@ resource "random_string" "random" {
 }
 
 resource "azurerm_resource_group" "app_resource" {
-    name = $(resourcename)
+    name = resourcename
     location = local.location
   
 }
