@@ -1,6 +1,6 @@
 # Steps
 
-# Connect the GitHub repo to the project in Azure DevOps.
+## Connect the GitHub repo to the project in Azure DevOps.
 
 # Create the yaml pipeline using the file provided in repo i.e azure-pipelines-yml
 
