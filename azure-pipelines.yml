@@ -12,6 +12,14 @@ pool:
 
 variables:
   group: group1
+  name: resourcename
+  value: $[variables.resourcename]
+  name: virtualnetworkname
+  value: $[variables.virtualnetworkname]
+  name: virtualmachinesize
+  value: $[variables.virtualmachinesize]
+  name: databasetype
+  value: $[variables.databasetype]
   subscription: Azure subscription 1(1)(de255c89-79d1-4652-9b7c-81d828c5beaa)
   resourceGroup: defaultresourcegroup
   storageAccount: defaulstorage
