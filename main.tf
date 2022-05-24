@@ -16,26 +16,26 @@ provider "azurerm" {
   features {}
 }
 
-variable "resourcename" {
-  type = string
-  description = "Please enter the Resource Group Name"
-}
+# variable "resourcename" {
+#   type = string
+#   description = "Please enter the Resource Group Name"
+# }
 
-variable "virtualnetworkname" {
-  type = string
-  description = "Please enter the Virtual Network Name"
+# variable "virtualnetworkname" {
+#   type = string
+#   description = "Please enter the Virtual Network Name"
 
-}
+# }
 
-variable "virtualmachinesize" {
-  type = string
-  description = "Please enter the Virtual Machine Size"
-}
+# variable "virtualmachinesize" {
+#   type = string
+#   description = "Please enter the Virtual Machine Size"
+# }
 
-variable "databasetype" {
-  type = string
-  description = "Please enter the database type"
-}
+# variable "databasetype" {
+#   type = string
+#   description = "Please enter the database type"
+# }
 
 locals {
   location="West Europe"
