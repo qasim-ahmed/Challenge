@@ -17,40 +17,40 @@ variables:
   container: defaulcontainer
   tfstateFile: terraform.tfstate
 
-steps:
-- task: TerraformInstaller@0
-  inputs:
-    terraformVersion: 'latest'
-- task: TerraformTaskV3@3
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    backendServiceArm: 'Azure subscription 1(5)(de255c89-79d1-4652-9b7c-81d828c5beaa)'
-    backendAzureRmResourceGroupName: 'defaultresourcegroup'
-    backendAzureRmStorageAccountName: 'defaulstorage'
-    backendAzureRmContainerName: 'defaulcontainer'
-    backendAzureRmKey: 'terraform.tfstate'
+# steps:
+# - task: TerraformInstaller@0
+#   inputs:
+#     terraformVersion: 'latest'
+# - task: TerraformTaskV3@3
+#   inputs:
+#     provider: 'azurerm'
+#     command: 'init'
+#     backendServiceArm: 'Azure subscription 1(5)(de255c89-79d1-4652-9b7c-81d828c5beaa)'
+#     backendAzureRmResourceGroupName: 'defaultresourcegroup'
+#     backendAzureRmStorageAccountName: 'defaulstorage'
+#     backendAzureRmContainerName: 'defaulcontainer'
+#     backendAzureRmKey: 'terraform.tfstate'
 
 
 
 stages:
-  # - stage: Install
-  #   jobs:
-  #     - job: Installation
-  #       continueOnError: false
-  #       steps:
-  #         - task: TerraformInstaller@0
-  #           inputs:
-  #             terraformVersion: '3.6.0'
-  #         - task: TerraformTaskV3@3
-  #           inputs:
-  #             provider: 'azurerm'
-  #             command: 'init'
-  #             backendServiceArm: 'Azure subscription 1(1)(de255c89-79d1-4652-9b7c-81d828c5beaa)'
-  #             backendAzureRmResourceGroupName: 'defaultresourcegroup'
-  #             backendAzureRmStorageAccountName: 'defaulstorage'
-  #             backendAzureRmContainerName: 'defaulcontainer'
-  #             backendAzureRmKey: 'terraform.tfstate'
+  - stage: Install
+    jobs:
+      - job: Installation
+        continueOnError: false
+        steps:
+          - task: TerraformInstaller@0
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTaskV3@3
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Azure subscription 1(1)(de255c89-79d1-4652-9b7c-81d828c5beaa)'
+              backendAzureRmResourceGroupName: 'defaultresourcegroup'
+              backendAzureRmStorageAccountName: 'defaulstorage'
+              backendAzureRmContainerName: 'defaulcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
           
   - stage: Plan
     jobs:
