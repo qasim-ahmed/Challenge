@@ -20,7 +20,7 @@ variables:
 steps:
 - task: TerraformInstaller@0
   inputs:
-    terraformVersion: '3.6.0'
+    terraformVersion: 'latest'
 - task: TerraformTaskV3@3
   inputs:
     provider: 'azurerm'
