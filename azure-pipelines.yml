@@ -78,6 +78,15 @@ stages:
           - task: TerraformTaskV3@3
             inputs:
               provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'Azure subscription 1(1)(de255c89-79d1-4652-9b7c-81d828c5beaa)'
+              backendAzureRmResourceGroupName: 'defaultresourcegroup'
+              backendAzureRmStorageAccountName: 'defaulstorage'
+              backendAzureRmContainerName: 'defaulcontainer'
+              backendAzureRmKey: 'terraform.tfstate'
+          - task: TerraformTaskV3@3
+            inputs:
+              provider: 'azurerm'
               command: 'plan'
               workingDirectory: '$(System.DefaultWorkingDirectory)'
               commandOptions: '-out=tfplan'
