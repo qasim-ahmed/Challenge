@@ -51,14 +51,14 @@ resource "random_string" "random" {
 }
 
 resource "azurerm_resource_group" "app_resource" {
-    name = var.resourcename
+    name = $(resourcename)
     location = local.location
   
 }
 
 # resource "azurerm_storage_account" "app_storage" {
 #   name                     = "app-storage"
-#   resource_group_name      = var.resourcename
+#   resource_group_name      = $(resourcename)
 #   location                 = local.location
 #   account_tier             = "Standard"
 #   account_replication_type = "GRS"
@@ -77,7 +77,7 @@ resource "azurerm_resource_group" "app_resource" {
 
 # Create virtual network
 resource "azurerm_virtual_network" "virtual_network" {
-  name                = var.virtualnetworkname
+  name                = $(virtualnetworkname)
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.app_resource.location
   resource_group_name = azurerm_resource_group.app_resource.name
@@ -161,7 +161,7 @@ resource "azurerm_linux_virtual_machine" "linux_machine" {
   location              = azurerm_resource_group.app_resource.location
   resource_group_name   = azurerm_resource_group.app_resource.name
   network_interface_ids = [azurerm_network_interface.network_interface.id]
-  size                  =  var.virtualmachinesize
+  size                  =  $(virtualmachinesize)
 
   os_disk {
     name                 = "myOsDisk"
@@ -220,7 +220,7 @@ resource "random_integer" "ri" {
 resource "azurerm_cosmosdb_account" "cosmo_db_account" {
   name = "tfex-cosmos-db-${random_integer.ri.result}"
   location = local.location
-  resource_group_name = var.resourcename
+  resource_group_name = $(resourcename)
   offer_type = "Standard"
   kind = "GlobalDocumentDB"
   enable_automatic_failover = true
@@ -243,7 +243,7 @@ geo_location {
 
 
 resource "azurerm_cosmosdb_sql_database" "sql_database" {
-  count = var.databasetype == "sql" ? 1: 0
+  count = $(databasetype) == "sql" ? 1: 0
   name                = "cosmos-sql-db"
   resource_group_name = "${azurerm_cosmosdb_account.cosmo_db_account.resource_group_name}"
   account_name        = "${azurerm_cosmosdb_account.cosmo_db_account.name}"
@@ -252,7 +252,7 @@ resource "azurerm_cosmosdb_sql_database" "sql_database" {
 
 
 resource "azurerm_cosmosdb_mongo_database" "mongo_database" {
-  count = var.databasetype == "mongo" ? 1: 0
+  count = $(databasetype) == "mongo" ? 1: 0
   name                = "cosmos-mongo-db"
   resource_group_name = "${azurerm_cosmosdb_account.cosmo_db_account.resource_group_name}"
   account_name        = "${azurerm_cosmosdb_account.cosmo_db_account.name}"
@@ -262,9 +262,9 @@ resource "azurerm_cosmosdb_mongo_database" "mongo_database" {
 
 
 resource "azurerm_cosmosdb_gremlin_database" "gremlin_database" {
-  count = var.databasetype == "gremlin" ? 1: 0
+  count = $(databasetype) == "gremlin" ? 1: 0
   name                = "cosmos-gremlin-db"
-  resource_group_name = var.resourcename
+  resource_group_name = $(resourcename)
   account_name        = "${azurerm_cosmosdb_account.cosmo_db_account.name}"
   throughput          = 400
 }
